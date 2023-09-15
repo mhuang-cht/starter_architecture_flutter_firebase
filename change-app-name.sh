@@ -32,5 +32,7 @@ grep -rl $old_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" |
 rm -fr macos web
 
 sed -i 's/starter-architecture-flutter/cht-debug/g' .firebaserc
+sed -i '/Firebase configuration files/,$d' .gitignore
+
 set -x
-firebase login && flutterfire.bat configure --yes 
+firebase login && flutterfire configure --yes 
