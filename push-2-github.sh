@@ -13,6 +13,6 @@ echo "README for $repo" > README.md
 set -xe
 git init
 git add .
-git commit -m "first commit after change the app name"
+git commit -m "First commit after changing the app name"
 git remote add origin git@github.com:$github_user/$repo.git
 git push -u origin master
