@@ -34,8 +34,8 @@ grep -rl $old_package_name_camel . | grep -v "^./.git/" | grep -v "change-app-na
 grep -rl $old_name . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_name/$app_name/g" @
 grep -rl $old_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_name_camel/$app_name_camel/g" @
 
-# remove platforms not needed
-rm -fr macos web
+# remove all platforms
+rm -fr android ios macos web
 
 # re-create android and ios platforms
 flutter create --platforms android,ios .
