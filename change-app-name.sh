@@ -29,11 +29,11 @@ if [ -n "$invalid_name" ]; then
     exit 1
 fi
 
-# remove all platforms
-rm -fr android ios macos web
+# remove platforms not needed
+rm -fr macos web
 
 # re-create android platforms
-flutter create --platforms android,ios .
+# flutter create --platforms android,ios .
 
 grep -rl $old_package_name . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_package_name/$new_package_name/g" @
 grep -rl $old_package_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_package_name_camel/$new_package_name_camel/g" @
