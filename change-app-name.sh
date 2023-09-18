@@ -32,13 +32,18 @@ fi
 # remove platforms not needed
 rm -fr macos web
 
-# re-create android platforms
-# flutter create --platforms android,ios .
-
 grep -rl $old_package_name . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_package_name/$new_package_name/g" @
 grep -rl $old_package_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_package_name_camel/$new_package_name_camel/g" @
 grep -rl $old_name . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_name/$app_name/g" @
 grep -rl $old_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_name_camel/$app_name_camel/g" @
+
+# append required Android SDK versions to local.properties
+cat <<EOF >> android/local.properties
+### appended by change-app-name.sh ###
+flutter.compileSdkVersion=34
+flutter.minSdkVersion=24
+flutter.targetSdkVersion=30
+EOF
 
 # re-link to firebase
 sed -i "s/starter-architecture-flutter/$firebase_project_id/g" .firebaserc
