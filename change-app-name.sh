@@ -1,7 +1,7 @@
 #! /bin/bash
 
 app_name="$1"
-firebase_project_name="$2"
+firebase_project_id="$2"
 
 old_name="starter_architecture_flutter_firebase"
 
@@ -14,12 +14,12 @@ old_package_name_camel="com.example.$old_name_camel"
 new_package_name_camel="com.chtsolutions.$app_name_camel"
 
 if [ -z "$app_name" ]; then
-    echo Usage: $(basename $0) app_name [firebase_project_name]
+    echo Usage: $(basename $0) app_name [firebase_project_id]
     exit 1
 fi
 
-if [ -z "$firebase_project_name" ]; then
-    firebase_project_name="cht-debug"
+if [ -z "$firebase_project_id" ]; then
+    firebase_project_id="cht-debug"
 fi
 
 invalid_name=$(echo $app_name | grep [^a-z0-9_])
@@ -37,11 +37,11 @@ grep -rl $old_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" |
 # remove all platforms
 rm -fr android ios macos web
 
-# re-create android and ios platforms
-flutter create --platforms android,ios .
+# re-create android platforms
+flutter create --platforms android .
 
 # re-link to firebase
-sed -i "s/starter-architecture-flutter/$firebase_project_name/g" .firebaserc
+sed -i "s/starter-architecture-flutter/$firebase_project_id/g" .firebaserc
 sed -i '/Firebase configuration files/,$d' .gitignore
 
 set -x
