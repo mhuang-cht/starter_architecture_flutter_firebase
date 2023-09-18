@@ -29,16 +29,16 @@ if [ -n "$invalid_name" ]; then
     exit 1
 fi
 
-grep -rl $old_package_name . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_package_name/$new_package_name/g" @
-grep -rl $old_package_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_package_name_camel/$new_package_name_camel/g" @
-grep -rl $old_name . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_name/$app_name/g" @
-grep -rl $old_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_name_camel/$app_name_camel/g" @
-
 # remove all platforms
 rm -fr android ios macos web
 
 # re-create android platforms
-flutter create --platforms android .
+flutter create --platforms android,ios .
+
+grep -rl $old_package_name . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_package_name/$new_package_name/g" @
+grep -rl $old_package_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_package_name_camel/$new_package_name_camel/g" @
+grep -rl $old_name . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_name/$app_name/g" @
+grep -rl $old_name_camel . | grep -v "^./.git/" | grep -v "change-app-name.sh" | xargs -i@ sed -i "s/$old_name_camel/$app_name_camel/g" @
 
 # re-link to firebase
 sed -i "s/starter-architecture-flutter/$firebase_project_id/g" .firebaserc
